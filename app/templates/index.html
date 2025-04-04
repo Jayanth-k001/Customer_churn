@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0a192f">
+  <link rel="stylesheet" href="../static/styles.css" />
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <title>Customer Churn Prediction</title>
+</head>
+
+<body>
+  <div class="loading"></div>
+  <div class="container">
+    <nav class="tab-navigation">
+      <button class="tab-button active" data-tab="prediction">Prediction Form</button>
+      <button class="tab-button" data-tab="dashboard">Dashboard</button>
+    </nav>
+
+    <div id="prediction" class="tab-content active">
+      <h2>Customer Churn Prediction</h2>
+      <h3>Advanced ML-Powered Analysis</h3>
+
+      <form action="/predict" method="post" id="predictionForm">
+        <div class="form-group">
+          <label for="gender">Gender:</label>
+          <select id="gender" name="gender" required>
+            <option value="0">Female</option>
+            <option value="1">Male</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="SeniorCitizen">Senior Citizen:</label>
+          <select id="SeniorCitizen" name="SeniorCitizen" required>
+            <option value="0">No</option>
+            <option value="1">Yes</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="Partner">Partner:</label>
+          <select id="Partner" name="Partner" required>
+            <option value="0">No</option>
+            <option value="1">Yes</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="Dependents">Dependents:</label>
+          <select id="Dependents" name="Dependents" required>
+            <option value="0">No</option>
+            <option value="1">Yes</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="tenure">Tenure (months):</label>
+          <input type="number" id="tenure" name="tenure" min="0" required />
+        </div>
+
+        <div class="form-group">
+          <label for="PhoneService">Phone Service:</label>
+          <select id="PhoneService" name="PhoneService" required>
+            <option value="0">No</option>
+            <option value="1">Yes</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="MultipleLines">Multiple Lines:</label>
+          <select id="MultipleLines" name="MultipleLines" required>
+            <option value="0">No</option>
+            <option value="1">Yes</option>
+            <option value="2">No phone service</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="InternetService">Internet Service:</label>
+          <select id="InternetService" name="InternetService" required>
+            <option value="0">No</option>
+            <option value="1">DSL</option>
+            <option value="2">Fiber optic</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="OnlineSecurity">Online Security:</label>
+          <select id="OnlineSecurity" name="OnlineSecurity" required>
+            <option value="0">No</option>
+            <option value="1">Yes</option>
+            <option value="2">No internet service</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="OnlineBackup">Online Backup:</label>
+          <select id="OnlineBackup" name="OnlineBackup" required>
+            <option value="0">No</option>
+            <option value="1">Yes</option>
+            <option value="2">No internet service</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="DeviceProtection">Device Protection:</label>
+          <select id="DeviceProtection" name="DeviceProtection" required>
+            <option value="0">No</option>
+            <option value="1">Yes</option>
+            <option value="2">No internet service</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="TechSupport">Tech Support:</label>
+          <select id="TechSupport" name="TechSupport" required>
+            <option value="0">No</option>
+            <option value="1">Yes</option>
+            <option value="2">No internet service</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="StreamingTV">Streaming TV:</label>
+          <select id="StreamingTV" name="StreamingTV" required>
+            <option value="0">No</option>
+            <option value="1">Yes</option>
+            <option value="2">No internet service</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="StreamingMovies">Streaming Movies:</label>
+          <select id="StreamingMovies" name="StreamingMovies" required>
+            <option value="0">No</option>
+            <option value="1">Yes</option>
+            <option value="2">No internet service</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="Contract">Contract:</label>
+          <select id="Contract" name="Contract" required>
+            <option value="0">Month-to-month</option>
+            <option value="1">One year</option>
+            <option value="2">Two year</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="PaperlessBilling">Paperless Billing:</label>
+          <select id="PaperlessBilling" name="PaperlessBilling" required>
+            <option value="0">No</option>
+            <option value="1">Yes</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="PaymentMethod">Payment Method:</label>
+          <select id="PaymentMethod" name="PaymentMethod" required>
+            <option value="0">Bank transfer</option>
+            <option value="1">Credit card</option>
+            <option value="2">Electronic check</option>
+            <option value="3">Mailed check</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="MonthlyCharges">Monthly Charges ($):</label>
+          <input type="number" id="MonthlyCharges" name="MonthlyCharges" min="0" step="0.01" required />
+        </div>
+
+        <div class="form-group">
+          <label for="TotalCharges">Total Charges ($):</label>
+          <input type="number" id="TotalCharges" name="TotalCharges" min="0" step="0.01" required />
+        </div>
+
+        <input type="submit" value="Predict Churn" />
+      </form>
+    </div>
+
+    <div id="dashboard" class="tab-content">
+      <h2>Analytics Dashboard</h2>
+      <div class="dashboard-grid">
+        <!-- Metrics Cards -->
+        <div class="metric-card">
+          <h4>Churn Rate</h4>
+          <p class="metric-value">{{ metrics.churn_rate }}%</p>
+        </div>
+        <div class="metric-card">
+          <h4>Avg Confidence</h4>
+          <p class="metric-value">{{ metrics.avg_confidence }}%</p>
+        </div>
+      </div>
+
+      <!-- Charts -->
+      <div class="charts-grid">
+        <div class="risk-assessment-panel">
+          <h4>Risk Assessment Overview</h4>
+          <!-- Add debug info (remove in production) -->
+          <div style="display: none;">
+            Debug metrics: {{ metrics }}
+          </div>
+          <div class="risk-metrics">
+            <div class="risk-metric high-risk">
+              <span class="risk-label">High Risk</span>
+              <span class="risk-value">{{ metrics.high_risk_count|default(0, true) }}</span>
+              <span class="risk-percentage">{{ metrics.high_risk_percentage|default(0, true) }}%</span>
+            </div>
+            <div class="risk-metric medium-risk">
+              <span class="risk-label">Medium Risk</span>
+              <span class="risk-value">{{ metrics.medium_risk_count|default(0, true) }}</span>
+              <span class="risk-percentage">{{ metrics.medium_risk_percentage|default(0, true) }}%</span>
+            </div>
+            <div class="risk-metric low-risk">
+              <span class="risk-label">Low Risk</span>
+              <span class="risk-value">{{ metrics.low_risk_count|default(0, true) }}</span>
+              <span class="risk-percentage">{{ metrics.low_risk_percentage|default(0, true) }}%</span>
+            </div>
+          </div>
+        </div>
+        <div class="chart-container">
+          <h4>Churn Distribution</h4>
+          <canvas id="churnDistribution"></canvas>
+        </div>
+        <div class="chart-container">
+          <h4>Feature Importance</h4>
+          <canvas id="featureImportance"></canvas>
+        </div>
+        <div class="chart-container">
+          <h4>Customer Segments in %</h4>
+          <canvas id="customerSegments"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {% if prediction_text %}
+  <div class="prediction-result">
+    <p>{{ prediction_text }}</p>
+  </div>
+  {% endif %}
+
+  {% if error_text %}
+  <div class="error-message">
+    <p>Error: {{ error_text }}</p>
+  </div>
+  {% endif %}
+
+  <script>
+    // Tab Navigation
+    document.querySelectorAll('.tab-button').forEach(button => {
+      button.addEventListener('click', () => {
+        document.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+        button.classList.add('active');
+        document.getElementById(button.dataset.tab).classList.add('active');
+      });
+    });
+
+    // Enhanced loading animation
+    document.getElementById('predictionForm').onsubmit = function() {
+      document.querySelector('.loading').classList.add('active');
+    };
+
+    // Initialize Dashboard Charts
+    function initializeDashboard(data) {
+      console.log('Initializing dashboard with data:', data);
+      
+      // Clear existing charts if they exist
+      const charts = ['churnDistribution', 'featureImportance', 'customerSegments'];
+      charts.forEach(chartId => {
+        const canvas = document.getElementById(chartId);
+        const ctx = canvas.getContext('2d');
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+      });
+
+      // Churn Distribution Chart
+      const churnChart = new Chart(document.getElementById('churnDistribution').getContext('2d'), {
+        type: 'pie',
+        data: {
+          labels: ['Churned', 'Retained'],
+          datasets: [{
+            data: [data.churn_count, data.retain_count], // These values are missing
+            backgroundColor: ['#ff6b6b', '#00ff9d']
+          }]
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: {
+              position: 'bottom',
+              labels: { color: '#e6f1ff' }
+            }
+          }
+        }
+      });
+
+      // Feature Importance Chart
+      const featureChart = new Chart(document.getElementById('featureImportance').getContext('2d'), {
+        type: 'bar',
+        data: {
+          labels: data.feature_importance.features,
+          datasets: [{
+            label: 'Importance Score',
+            data: data.feature_importance.importance,
+            backgroundColor: '#00ff9d'
+          }]
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: {
+              position: 'bottom',
+              labels: { color: '#e6f1ff' }
+            }
+          },
+          scales: {
+            y: {
+              beginAtZero: true,
+              ticks: { color: '#e6f1ff' }
+            },
+            x: {
+              ticks: { 
+                color: '#e6f1ff',
+                maxRotation: 45,
+                minRotation: 45
+              }
+            }
+          }
+        }
+      });
+
+      // Customer Segments Chart
+      const segmentChart = new Chart(document.getElementById('customerSegments').getContext('2d'), {
+        type: 'doughnut',
+        data: {
+          labels: data.customer_segments.segments,
+          datasets: [{
+            data: data.customer_segments.distribution,
+            backgroundColor: ['#ff6b6b', '#ffd93d', '#00ff9d']
+          }]
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: {
+              position: 'bottom',
+              labels: { color: '#e6f1ff' }
+            }
+          }
+        }
+      });
+
+      console.log('Charts initialized successfully');
+    }
+
+    // Function to load dashboard data
+    function loadDashboardData() {
+      console.log('Fetching dashboard data...');
+      fetch('/dashboard-data')
+        .then(response => {
+          console.log('Response received:', response);
+          return response.json();
+        })
+        .then(data => {
+          console.log('Data received:', data);
+          initializeDashboard(data);
+        })
+        .catch(error => {
+          console.error('Error loading dashboard:', error);
+        });
+    }
+
+    // Add click event listener to dashboard tab
+    document.addEventListener('DOMContentLoaded', function() {
+      const dashboardTab = document.querySelector('[data-tab="dashboard"]');
+      if (dashboardTab) {
+        dashboardTab.addEventListener('click', function() {
+          console.log('Dashboard tab clicked');
+          loadDashboardData();
+        });
+      }
+
+      // Initialize dashboard if it's the active tab
+      if (document.querySelector('#dashboard').classList.contains('active')) {
+        console.log('Dashboard is active on load');
+        loadDashboardData();
+      }
+    });
+
+  </script>
+</body>
+
+</html>
